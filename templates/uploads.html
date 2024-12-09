@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploads</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <style>
+        .upload-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .upload-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h2>Hasil Upload</h2>
+        <div id="uploads-list">
+            {% for upload in uploads %}
+                <div class="upload-item">
+                    <h5>{{ upload.challenge_title }}</h5>
+                    <p>{{ upload.response }}</p>
+                    <img src="{{ upload.image_url }}" alt="Uploaded Image">
+                </div>
+            {% endfor %}
+        </div>
+
+        <div id="loading" class="loading">
+            <p>Memuat lebih banyak...</p>
+        </div>
+
+        <div id="no-more" class="text-center" style="display:none;">
+            <p>Semua upload telah dimuat!</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let page = 1;
+        let loading = false;
+
+        function loadMoreUploads() {
+            if (loading) return;
+            loading = true;
+            $('#loading').show();  // Tampilkan animasi loading
+
+            page += 1;
+
+            // Mengambil data lebih lanjut dengan AJAX
+            $.ajax({
+                url: '/uploads?page=' + page,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.uploads.length > 0) {
+                        data.uploads.forEach(function(upload) {
+                            $('#uploads-list').append(`
+                                <div class="upload-item">
+                                    <h5>${upload.challenge_title}</h5>
+                                    <p>${upload.response}</p>
+                                    <img src="${upload.image_url}" alt="Uploaded Image">
+                                </div>
+                            `);
+                        });
+                        $('#loading').hide();  // Sembunyikan animasi loading
+                        loading = false;
+                    } else {
+                        $('#no-more').show();  // Menampilkan pesan jika tidak ada lagi upload
+                        $('#loading').hide();
+                    }
+                },
+                error: function() {
+                    $('#loading').hide();
+                    alert('Terjadi kesalahan saat memuat data.');
+                }
+            });
+        }
+
+        // Menambahkan event listener scroll
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                loadMoreUploads();
+            }
+        });
+    </script>
+</body>
+</html>

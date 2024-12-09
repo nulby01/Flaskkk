@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenges | Project Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="challenge-container">
+        <h1>Challenge Menarik</h1>
+        <p>Ikuti berbagai tantangan seru setiap hari!</p>
+        <div class="challenge-list">
+            {% for challenge in challenges %}
+            <div class="challenge-card">
+                <h2>{{ challenge.title }}</h2>
+                <p>{{ challenge.description }}</p>
+                <p class="details">{{ challenge.details }}</p>
+                <a href="{{ url_for('challenge_detail', challenge_id=loop.index) }}">
+                    <button>Ikuti Tantangan</button>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

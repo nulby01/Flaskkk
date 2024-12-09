@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unggahan Tantangan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="challenge-container">
+        <h1>Unggahan Tantangan</h1>
+        {% if uploads %}
+            <div class="uploads-list">
+                {% for upload in uploads %}
+                    <div class="upload-item">
+                        <h2>{{ upload.challenge_title }}</h2>
+                        <p>{{ upload.response }}</p>
+                        <img src="{{ upload.image_url }}" alt="Unggahan Gambar" class="upload-image">
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Belum ada unggahan. Jadilah yang pertama!</p>
+        {% endif %}
+        <a href="{{ url_for('challenges') }}">Kembali ke Tantangan</a>
+    </div>
+</body>
+</html>

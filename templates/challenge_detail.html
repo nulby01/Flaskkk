@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ challenge.title }} | Project Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="challenge-container">
+        <h1>{{ challenge.title }}</h1>
+        <p>{{ challenge.description }}</p>
+        <p class="details">{{ challenge.details }}</p>
+
+        <form method="POST" action="{{ url_for('challenge_detail', challenge_id=challenge.id) }}" enctype="multipart/form-data">
+            <!-- Textarea -->
+            <label for="response">Jawaban Anda:</label>
+            <textarea id="response" name="response" placeholder="Tulis jawaban atau tanggapan Anda di sini..." required></textarea>
+            
+            <!-- File Input -->
+            <label for="file">Unggah Foto:</label>
+            <input type="file" id="file" name="file" accept="image/png, image/jpeg, image/jpg" required>
+            
+            <!-- Pratinjau Gambar -->
+            <div id="preview-container">
+                <img id="image-preview" src="#" alt="Pratinjau Foto Akan Muncul di Sini" style="display: none;">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file');
+        const previewImage = document.getElementById('image-preview');
+
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '#';
+                previewImage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+

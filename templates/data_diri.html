@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isi Data Diri | Project Challenge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Isi Data Diri Anda</h1>
+        <form method="POST" action="{{ url_for('data_diri') }}">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
+            
+            <label for="usia">Usia:</label>
+            <input type="number" id="usia" name="usia" placeholder="Masukkan usia Anda" required>
+            
+            <label for="hobi">Hobi:</label>
+            <input type="text" id="hobi" name="hobi" placeholder="Masukkan asal Anda" required>
+            
+            <button type="submit">Simpan</button>
+        </form>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,325 @@
+/* Umum */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f0f0f; /* Latar belakang global */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.3));
+    overflow: hidden;
+}
+
+/* Background Blur Global */
+.blur-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://source.unsplash.com/random/1920x1080') no-repeat center center/cover;
+    filter: blur(22px);
+    z-index: -1;
+}
+
+/* Form Halaman Isi Data Diri */
+.form-container {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to bottom right, #0e0e0e, #070707);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container h1 {
+    font-size: 36px;
+    color: #fc7efc;
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    background: #fd95f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.form-container label {
+    font-size: 16px;
+    color: #111111;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e39191;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-container button {
+    background-color: #0d0d0d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #9e77f8;
+}
+
+/* Halaman Challenge */
+.challenge-container {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to bottom right, #eef5f8, #e6e6fa);
+    min-height: 100vh;
+}
+
+.challenge-container h1 {
+    font-size: 36px;
+    color: #101110;
+    margin-bottom: 10px;
+}
+
+.challenge-container p {
+    font-size: 18px;
+    color: #ef76f4;
+    margin-bottom: 20px;
+}
+
+.challenge-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.challenge-card {
+    background: #0f0f0f;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.challenge-card h2 {
+    font-size: 22px;
+    color: #fb76cd;
+    margin-bottom: 10px;
+}
+
+.challenge-card p {
+    font-size: 16px;
+    color: #f5f6f9;
+    margin-bottom: 15px;
+}
+
+.challenge-card .details {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.challenge-card button {
+    background-color: #eda1f7;
+    color: rgb(18, 17, 17);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.challenge-card button:hover {
+    background-color: #46f8e0;
+}
+
+.challenge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+#file {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#preview-container {
+    text-align: center;
+}
+
+#image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: none;
+}
+
+button[type="submit"] {
+    background-color: #0d0d0d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #9e77f8;
+}
+/* Umum */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Pastikan halaman mendukung scrolling */
+}
+
+/* Kontainer utama halaman */
+.challenge-container {
+    padding: 20px;
+    background: linear-gradient(to bottom right, #eef5f8, #e6e6fa);
+    min-height: 100%; /* Pastikan elemen ini tidak memotong konten */
+    height: auto; /* Atur tinggi otomatis agar bisa diperpanjang */
+    box-sizing: border-box; /* Pastikan padding dihitung dalam ukuran */
+    overflow: auto; /* Tambahkan pengguliran jika konten melebihi tinggi */
+}
+
+/* Form */
+form {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto; /* Tengah-kan form */
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Pastikan padding tidak memengaruhi ukuran total */
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical; /* Izinkan textarea untuk diubah ukurannya */
+}
+
+/* Pratinjau gambar */
+#preview-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#image-preview {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+/* Gaya untuk halaman uploads */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.uploads-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.uploads-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.uploads-list {
+    max-height: 500px; /* Membatasi tinggi elemen */
+    overflow-y: auto; /* Aktifkan scrolling vertikal */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column-reverse; /* Menampilkan item baru di atas */
+}
+
+/* Gaya untuk setiap item upload */
+.upload-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.upload-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.upload-item img {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
