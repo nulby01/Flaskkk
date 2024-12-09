@@ -2,17 +2,31 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from werkzeug.utils import secure_filename
 import os
 from datetime import datetime
+import boto3
+from botocore.exceptions import NoCredentialsError
+from dotenv import load_dotenv
+
+# Load AWS credentials from .env file (if available)
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Folder untuk menyimpan file upload
+# Folder untuk menyimpan file upload sementara
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Pastikan folder upload ada
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Inisialisasi AWS S3 client
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name='us-east-1'  # Sesuaikan dengan region S3 Anda
+)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -100,16 +114,25 @@ def challenge_detail(challenge_id):
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
 
-            # Simpan data upload ke dalam sebuah list
-            upload_data = {
-                'challenge_title': challenge['title'],
-                'response': response,
-                'image_url': url_for('static', filename=f'uploads/{filename}')
-            }
+            # Upload file ke S3
+            try:
+                s3_client.upload_file(file_path, 'your-bucket-name', filename)
+                # Menghapus file lokal setelah upload
+                os.remove(file_path)
+                # Simpan data upload ke dalam list
+                upload_data = {
+                    'challenge_title': challenge['title'],
+                    'response': response,
+                    'image_url': f'https://{s3_client.meta.endpoint_url}/your-bucket-name/{filename}'
+                }
 
-            UPLOADS.append(upload_data)  # Menyimpan data upload
+                UPLOADS.append(upload_data)  # Menyimpan data upload
+                flash(f"Tantangan '{challenge['title']}' berhasil diikuti! Foto diunggah ke S3.", 'success')
+            except NoCredentialsError:
+                flash("Tidak ada kredensial AWS yang ditemukan.", 'error')
+            except Exception as e:
+                flash(f"Error saat mengunggah file ke S3: {e}", 'error')
 
-            flash(f"Tantangan '{challenge['title']}' berhasil diikuti! Foto diunggah ke {file_path}.", 'success')
             return redirect(url_for('challenge_uploads'))
         else:
             flash("Gagal mengunggah file. Pastikan formatnya adalah PNG, JPG, atau JPEG.", 'error')
